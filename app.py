@@ -46,6 +46,8 @@ def login():
             if user.verify_password(password):
                 login_user(user)
                 return redirect(url_for('chat'))
+            else:
+                flash('Invalid username or password')
         else:
             flash('Invalid username or password')
     return render_template('login.html')
@@ -73,7 +75,7 @@ def send_message():
     user = current_user.username
     message = request.form.get('message')
     enc_message = handler.ChatHandler.process_message(user=user, message=message)
-    response = requests.post(f"http://{config.SERVER_ADDR}:{config.SERVER_PORT}/send_message", json=enc_message)
+    response = requests.post(f"http://{config.SERVER_ADDR}:{config.SERVER_PORT}/send_message", json=enc_message).json()
     if response['status'] == 200:
         return render_template('chat.html')
     else:

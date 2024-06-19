@@ -32,7 +32,6 @@ class EncryptionHelper:
         """
         function for AES Decrypting
         :param ciphertext:
-        :param secretkey:
         :return:
         """
         iv = ciphertext[:AES.block_size] #separating the IV
@@ -49,7 +48,6 @@ class EncryptionHelper:
         """
         function for generating hmac
         :param ciphertext:
-        :param secretkey:
         :return:
         """
         mac = hmac.new(config.SECRET_KEY, ciphertext, hashlib.sha256).hexdigest() #hexdigest so it can be send in a json
@@ -70,24 +68,3 @@ class EncryptionHelper:
         log.debug(f"RECEIVED HMAC: {received_hmac}")
         return hmac.compare_digest(calculated_hmac, received_hmac)
 
-
-
-if __name__ == '__main__':
-    # Example usage
-    message = b"Hello World"
-    key = get_random_bytes(16)  # 128-bit key
-    encrypted_message = EncryptionHelper.aes_encrypt(message)
-
-    hmac = EncryptionHelper.generate_hmac(encrypted_message)
-    # Assume the message has been transmitted and received elsewhere
-    # Verify HMAC before decryption
-    if EncryptionHelper.verify_hmac(encrypted_message, hmac):
-        decrypted_message = EncryptionHelper.aes_decrypt(encrypted_message)
-        print(type(message))
-        print(type(encrypted_message))
-        print(type(decrypted_message))
-        print("Original Message:", message)
-        print("Encrypted Message:", encrypted_message)
-        print("Decrypted Message:", decrypted_message)
-    else:
-        print("HMAC verification failed. Message may have been tampered with.")

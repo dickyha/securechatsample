@@ -23,18 +23,3 @@ class ChatHandler:
                    'message': base64.b64encode(encrypted_message).decode(),
                    'hmac_signature': hmac_signature}
         return message
-
-    @staticmethod
-    def receive_message(messages: list) -> dict:
-        """
-        Function to decrypt messages from the server.
-        :param messages:
-        :return:
-        """
-        for msg in messages:
-            if encryption.EncryptionHelper.verify_hmac(ciphertext=base64.b64decode(msg['message']),
-                                                       received_hmac=msg['hmac_signature']):
-                decrypted_message = encryption.EncryptionHelper.aes_decrypt(base64.b64decode(msg['message']))
-                return {'user': msg['user'], 'message': decrypted_message.decode()}
-            else:
-                return {'user': msg['user'], 'message': 'Message tampered!'}
