@@ -19,10 +19,10 @@ login_manager.login_view = 'login'
 
 messages = []
 users = {
-    "admin": "admin",
-    "minda": "minda1",
-    "ledy": "ledy1",
-    "naya": "naya1"
+    "admin": "$2b$12$X3Z9zq3wba9myBJU4veEbeGPObm0PAGvJLdcyWRs3HsnGJgMLxsfK",
+    "minda": "$2b$12$2OjrVGOWwqs75ZLoMI912e3Yuy9eOjHc.IWVGdgInyfN4zX7EdH/W",
+    "ledy": "$2b$12$q677g8A5l7MAORkVFZ2D2OHESsvOyRNvyaVAm6UVnyDT5Ydg89a8O",
+    "naya": "$2b$12$O/36/A7WbSG6SM7wZ980aOBbVAtbr9/h6cy31hodbaEPm.rSNvLpG"
 }
 
 @login_manager.user_loader
@@ -41,10 +41,11 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username in users and users[username] == password:
-            user = User(username, password)
-            login_user(user)
-            return redirect(url_for('chat'))
+        if username in users:
+            user = User(username, users[username])
+            if user.verify_password(password):
+                login_user(user)
+                return redirect(url_for('chat'))
         else:
             flash('Invalid username or password')
     return render_template('login.html')
@@ -68,7 +69,8 @@ def send_message():
     NOTE: Need a separate handler for testing
     :return:
     """
-    user = request.form.get('user')
+    # user = request.form.get('user')
+    user = current_user.username
     message = request.form.get('message')
     enc_message = handler.ChatHandler.process_message(user=user, message=message)
     response = requests.post(f"http://{config.SERVER_ADDR}:{config.SERVER_PORT}/send_message", json=enc_message)
