@@ -1,4 +1,0 @@
-1. Create Test to prove encryption, Decryption, HMAC checking
-2. Connect to server.py
-3. Re-do Readme.md
-4. Create handler for app.py
