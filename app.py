@@ -90,7 +90,6 @@ def receive_messages():
     """
     decrypted_messages = []
     response = requests.get(f"http://{config.SERVER_ADDR}:{config.SERVER_PORT}/get_messages").json()
-    handler.ChatHandler.receive_message(response['data'])
     if len(response.get('data')) == 0:
         return jsonify(decrypted_messages)
 
