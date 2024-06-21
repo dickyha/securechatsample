@@ -20,9 +20,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-"""{'user': user,
+"""
+Message format.
+{'user': user,
     'message': base64.b64encode(encrypted_message).decode(),
-    'hmac_signature': hmac_signature}"""
+    'hmac_signature': hmac_signature}
+"""
 
 
 class Message(BaseModel):
