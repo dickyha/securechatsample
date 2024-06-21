@@ -17,8 +17,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-messages = []
-
 #Init simple database
 users = {
     "admin": "$2b$12$X3Z9zq3wba9myBJU4veEbeGPObm0PAGvJLdcyWRs3HsnGJgMLxsfK",
