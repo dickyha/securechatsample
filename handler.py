@@ -2,7 +2,6 @@ import logging
 import logg
 import encryption
 import base64
-import requests
 
 
 class ChatHandler:

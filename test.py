@@ -39,3 +39,4 @@ def test_decrypt_message():
 
 if __name__ == "__main__":
     test_send_message()
+    test_decrypt_message()

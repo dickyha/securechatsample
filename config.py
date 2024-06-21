@@ -1,4 +1,3 @@
-#from Crypto.Random import get_random_bytes
 APP_ADDR = "0.0.0.0"
 APP_PORT = 5000
 SERVER_ADDR = "0.0.0.0"
